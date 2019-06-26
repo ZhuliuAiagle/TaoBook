@@ -19,6 +19,31 @@ public class ItemEntity {
     private BigDecimal price;
     private int buyCount;
 
+    public UserEntity getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(UserEntity publisher) {
+        this.publisher = publisher;
+    }
+
+    @ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinColumn(name="user_id", referencedColumnName = "id")
+    UserEntity publisher;
+
+    public UserEntity getRequester() {
+        return requester;
+    }
+
+    public void setRequester(UserEntity requester) {
+        this.requester = requester;
+    }
+
+    @ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinColumn(name="req_id", referencedColumnName = "id")
+    UserEntity requester;
+
+
     @Id
     @Column(name = "id")
     public String getId() {
