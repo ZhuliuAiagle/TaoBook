@@ -10,5 +10,7 @@
         <property name="time" column="time"/>
         <property name="content" column="content"/>
         <property name="status" column="status"/>
+        <many-to-one name="sender" class="com.example.taobook.datasour.UserEntity" column="from_uid"/>
+        <many-to-one name="receiver" class="com.example.taobook.datasour.UserEntity" column="to_uid"/>
     </class>
 </hibernate-mapping>

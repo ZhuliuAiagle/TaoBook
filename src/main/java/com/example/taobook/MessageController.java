@@ -1,9 +1,11 @@
 package com.example.taobook;
 
 
+import com.example.taobook.datasour.MessageEntity;
 import com.example.taobook.datasour.UserEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -22,6 +24,21 @@ public class MessageController {
             Session session = TaoBookApplication.sessionFactory.openSession();
             UserEntity from = session.get(UserEntity.class, messageInfo.fromUid);
             UserEntity to = session.get(UserEntity.class, messageInfo.toUid);
+            if(from == null) throw new Exception("Invalid Sender - User not found: " + messageInfo.fromUid);
+            if(to == null) throw new Exception("Invalid Receiver - User not found: " + messageInfo.toUid);
+            MessageEntity messageEntity = new MessageEntity();
+            messageEntity.setId(id);
+            messageEntity.setType(messageInfo.type);
+            messageEntity.setSender(from);
+            messageEntity.setReceiver(to);
+            messageEntity.setTime(time);
+            messageEntity.setContent(messageInfo.content);
+            messageEntity.setStatus(status);
+            Transaction t = session.beginTransaction();
+            session.save(messageEntity);
+            t.commit();
+            session.close();
+            return "SUCCESS";
         }catch (Exception e){
             e.printStackTrace();
             return e.getMessage();

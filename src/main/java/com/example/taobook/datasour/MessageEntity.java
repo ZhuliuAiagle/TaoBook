@@ -13,6 +13,30 @@ public class MessageEntity {
     private String content;
     private int status;
 
+    public UserEntity getSender() {
+        return sender;
+    }
+
+    public void setSender(UserEntity sender) {
+        this.sender = sender;
+    }
+
+    public UserEntity getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(UserEntity receiver) {
+        this.receiver = receiver;
+    }
+
+    @ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinColumn(name="from_uid", referencedColumnName = "id")
+    private UserEntity sender;
+
+    @ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinColumn(name="to_uid", referencedColumnName = "id")
+    private UserEntity receiver;
+
     @Id
     @Column(name = "id")
     public String getId() {
