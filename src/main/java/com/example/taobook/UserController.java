@@ -26,7 +26,7 @@ public class UserController {
             return "No such username";
         String truePassword = u.getPassword();
         if(truePassword.equals(loginInfo.password))
-            return "Login Successfully";
+            return "SUCCESS";
         else
             return "Wrong Password";
     }
@@ -56,7 +56,7 @@ public class UserController {
             System.out.println(e.getMessage());
             return e.getMessage();
         }
-        return "200 OK";
+        return "SUCCESS";
     }
     @RequestMapping(value = "/modify",method = RequestMethod.POST,
             produces = "application/json;charset=UTF-8")
