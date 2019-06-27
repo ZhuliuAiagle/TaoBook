@@ -18,6 +18,16 @@ public class ItemEntity {
     private int stock;
     private BigDecimal price;
     private int buyCount;
+    private String link;
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
 
     public UserEntity getPublisher() {
         return publisher;

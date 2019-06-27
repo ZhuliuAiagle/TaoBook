@@ -16,6 +16,16 @@ public class RequestEntity {
     private BigDecimal priceCeil;
     private BigDecimal priceFloor;
     private Timestamp deliTime;
+    private String img;
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
 
 
     public UserEntity getPublisher() {

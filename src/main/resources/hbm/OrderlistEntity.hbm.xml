@@ -15,6 +15,7 @@
         <property name="sedTime" column="sed_time"/>
         <property name="recTime" column="rec_time"/>
         <property name="comment" column="comment"/>
+        <property name="type" column="type"/>
         <many-to-one name="item" class="com.example.taobook.datasour.ItemEntity" column="item_id"/>
         <many-to-one name="account" class="com.example.taobook.datasour.AccountEntity" column="buy_acid"/>
     </class>

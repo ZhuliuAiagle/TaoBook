@@ -15,6 +15,7 @@
         <property name="stock" column="stock"/>
         <property name="price" column="price"/>
         <property name="buyCount" column="buy_count"/>
+        <property name="link" column="link"/>
         <many-to-one name="publisher" class="com.example.taobook.datasour.UserEntity" column="user_id"/>
         <many-to-one name="requester" class="com.example.taobook.datasour.UserEntity" column="req_id"/>
     </class>

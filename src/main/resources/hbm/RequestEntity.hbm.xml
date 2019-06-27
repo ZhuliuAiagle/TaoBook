@@ -13,6 +13,7 @@
         <property name="priceCeil" column="price_ceil"/>
         <property name="priceFloor" column="price_floor"/>
         <property name="deliTime" column="deli_time"/>
+        <property name="img" column="img"/>
         <many-to-one name="publisher" class="com.example.taobook.datasour.UserEntity" column="user_id"/>
     </class>
 </hibernate-mapping>

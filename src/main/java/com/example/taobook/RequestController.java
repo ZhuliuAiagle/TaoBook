@@ -43,6 +43,7 @@ public class RequestController {
             requestEntity.setPriceCeil(priceCeil);
             requestEntity.setPriceFloor(priceFloor);
             requestEntity.setDeliTime(deliTime);
+            requestEntity.setImg(requestInfo.img);
             Transaction t = session.beginTransaction();
             session.save(requestEntity);
             t.commit();
@@ -70,4 +71,6 @@ class RequestInfo{
     BigDecimal priceFloor;
     @JsonProperty(value="deli_time")
     String deliTime; // in 'yyyy-mm-dd hh:mm:ss' format
+    @JsonProperty(value="img")
+    String img;
 }

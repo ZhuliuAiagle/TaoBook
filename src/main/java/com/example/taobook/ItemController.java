@@ -48,6 +48,7 @@ public class ItemController {
             it.setStock(stock);
             it.setPrice(price);
             it.setBuyCount(buyCount);
+            it.setLink(newItemInfo.link);
             // 获取当前插入用户的用户信息实
             Session session = TaoBookApplication.sessionFactory.openSession();
             UserEntity pb = session.get(UserEntity.class, userId);
@@ -133,6 +134,8 @@ class NewItemInfo{
         int stock;
     @JsonProperty(value="price")
         BigDecimal price;
+    @JsonProperty(value="link")
+        String link;
 }
 
 // 删除的话，除非是管理员，必须保证user_id和item_id一致

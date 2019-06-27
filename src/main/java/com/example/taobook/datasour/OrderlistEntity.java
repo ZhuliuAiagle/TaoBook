@@ -18,6 +18,17 @@ public class OrderlistEntity {
     private Timestamp sedTime;
     private Timestamp recTime;
     private String comment;
+    private int type;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+
 
     public ItemEntity getItem() {
         return item;

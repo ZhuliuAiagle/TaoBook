@@ -42,6 +42,7 @@ public class OrderController {
             orderlistEntity.setAccount(account);
             orderlistEntity.setItem(it);
             orderlistEntity.setPay(it.getPrice().multiply(BigDecimal.valueOf(count))); // 商品的合计价格
+            orderlistEntity.setType(orderInfo.type);
             Transaction tran = session.beginTransaction();
             session.save(orderlistEntity);
             tran.commit();
@@ -160,6 +161,8 @@ class OrderInfo{
     int count;
     @JsonProperty(value="pay_type")
     int payType;
+    @JsonProperty(value="type")
+    int type;
 }
 
 class ConfirmOrderInfo{
