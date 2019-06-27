@@ -41,20 +41,26 @@ public class OrderController {
             if(it == null) throw new ClassNotFoundException("Invalid item: " + item_id);
             AccountEntity account = session.get(AccountEntity.class, acc_id);
             if(account == null) throw new ClassNotFoundException("Invalid wallet account:" + acc_id);
+            if(it.getStock() <= 0) throw new Exception("This item has sold out");
             orderlistEntity.setAccount(account);
             orderlistEntity.setItem(it);
             orderlistEntity.setPay(it.getPrice().multiply(BigDecimal.valueOf(count))); // 商品的合计价格
             Transaction tran = session.beginTransaction();
             session.save(orderlistEntity);
             tran.commit();
+            // 更新库存事务
+            Transaction stockUpdateTran = session.beginTransaction();
+            it.setStock(it.getStock() - 1);
+            session.update(it);
+            stockUpdateTran.commit();
             session.close();
             return "SUCCESS";
         }catch(ClassNotFoundException e){
           e.printStackTrace();
-          return "INVALID ITEM OR ACCOUNT";
+            return e.getMessage();
         } catch (Exception e){
             e.printStackTrace();
-            return "INTERNAL ERROR";
+            return e.getMessage();
         }
     }
     @RequestMapping(value = "/order/confirm", method = RequestMethod.POST,
