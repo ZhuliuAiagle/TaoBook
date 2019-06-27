@@ -15,14 +15,13 @@ public class HelloController {
     @RequestMapping("/hello")
     public String say(){
         Session session = TaoBookApplication.sessionFactory.openSession();
-        UserEntity u = session.get(UserEntity.class,"nm00009");
+        RequestEntity u = session.get(RequestEntity.class,"test");
         session.close();
         if(u == null) return "shit!";
-        return "hello, your email is: " + u.getEmail();
+        return "hello, your email is: " + u.getDescription();
     }
     @RequestMapping("/test")
     public String test(){
-
         return "xxx";
     }
 }

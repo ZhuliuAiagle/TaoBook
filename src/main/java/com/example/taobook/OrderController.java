@@ -6,13 +6,10 @@ import com.example.taobook.datasour.ItemEntity;
 import com.example.taobook.datasour.OrderlistEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 

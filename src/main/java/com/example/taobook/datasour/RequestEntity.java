@@ -17,6 +17,19 @@ public class RequestEntity {
     private BigDecimal priceFloor;
     private Timestamp deliTime;
 
+
+    public UserEntity getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(UserEntity publisher) {
+        this.publisher = publisher;
+    }
+
+    @ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinColumn(name="user_id", referencedColumnName = "id")
+    private UserEntity publisher;
+
     @Id
     @Column(name = "id")
     public String getId() {

@@ -9,6 +9,8 @@
     <property name="connection.username">root</property>
     <property name="connection.password">123456</property>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+    <property name="connection.useUnicode">true</property>
+    <property name="connection.characterEncoding">UTF-8</property>
     <mapping resource="/hbm/AccountEntity.hbm.xml"/>
     <mapping class="com.example.taobook.datasour.AccountEntity"/>
     <mapping resource="/hbm/ItemEntity.hbm.xml"/>
