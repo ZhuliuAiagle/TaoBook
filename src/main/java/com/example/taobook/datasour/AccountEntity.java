@@ -14,6 +14,18 @@ public class AccountEntity {
     private Integer bankType;
     private String bankAccount;
 
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    @ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinColumn(name="user_id", referencedColumnName = "id")
+    private UserEntity user;
+
     @Id
     @Column(name = "id")
     public String getId() {

@@ -19,6 +19,30 @@ public class OrderlistEntity {
     private Timestamp recTime;
     private String comment;
 
+    public ItemEntity getItem() {
+        return item;
+    }
+
+    public void setItem(ItemEntity item) {
+        this.item = item;
+    }
+
+    @ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinColumn(name="item_id", referencedColumnName = "id")
+    private ItemEntity item;
+
+    public AccountEntity getAccount() {
+        return account;
+    }
+
+    public void setAccount(AccountEntity account) {
+        this.account = account;
+    }
+
+    @ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinColumn(name="buy_acid", referencedColumnName = "id")
+    private AccountEntity account;
+
     @Id
     @Column(name = "id")
     public String getId() {

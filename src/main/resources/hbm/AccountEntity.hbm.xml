@@ -11,5 +11,6 @@
         <property name="isBank" column="is_bank"/>
         <property name="bankType" column="bank_type"/>
         <property name="bankAccount" column="bank_account"/>
+        <many-to-one name="User" class="com.example.taobook.datasour.UserEntity" column="user_id"/>
     </class>
 </hibernate-mapping>

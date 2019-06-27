@@ -69,10 +69,10 @@ public class ItemController {
             return "SUCCESS";
         }catch(ClassNotFoundException e) {
             e.printStackTrace();
-            return "NO_SUCH_USERS";
+            return e.getMessage();
         }catch(Exception e){
             e.printStackTrace();
-            return "INTERAL_ERROR";
+            return e.getMessage();
         }
     }
     @RequestMapping(value = "/item/delete", method = RequestMethod.POST,
@@ -96,13 +96,13 @@ public class ItemController {
             return "SUCCESS";
         }catch (ClassNotFoundException e){
             e.printStackTrace();
-            return "INVALID USER OR ITEM";
+            return e.getMessage();
         }catch(UnsupportedOperationException e){
             e.printStackTrace();
-            return "USER ITEM NOT MATCH";
+            return e.getMessage();
         }catch (Exception e){
             e.printStackTrace();
-            return "INTERNAL ERROR";
+            return e.getMessage();
         }
 
     }
