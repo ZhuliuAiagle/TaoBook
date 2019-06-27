@@ -100,6 +100,7 @@ public class OrderController {
             if(!itemOwner.equals(user_id)) throw new ClassNotFoundException("Publisher does not match: " + user_id);
             if(order.getStatus() == 3) throw new ClassNotFoundException("This order has been aborted");
             if(order.getStatus() > 3) throw new ClassNotFoundException("This order has already been delivered");
+            if(order.getStatus() == 1) throw new ClassNotFoundException("This order has not been confirmed yet");
             order.setStatus(4);
             order.setSedTime(new Timestamp(new Date().getTime()));
             Transaction tran = session.beginTransaction();
@@ -118,7 +119,32 @@ public class OrderController {
     public String SigningOrder(@RequestBody SigningInfo signingInfo){
         String user_id = signingInfo.userId;
         String order_id = signingInfo.orderId;
-        
+        String comment = signingInfo.comment;
+        try{
+            Session session = TaoBookApplication.sessionFactory.openSession();
+            OrderlistEntity order = session.get(OrderlistEntity.class, order_id);
+            if(order == null) throw new ClassNotFoundException("No such order: "+ order_id);
+            String realId = order.getAccount().getUser().getId();
+            if(!realId.equals(user_id)) throw new ClassNotFoundException("Buyer does not match: " + user_id);
+            if(order.getStatus() != 4)  throw new ClassNotFoundException("This order can't be signed. status="+order.getStatus());
+            order.setStatus(5);
+            order.setRecTime(new Timestamp(new Date().getTime()));
+            order.setComment(comment);
+            Transaction tran_1 = session.beginTransaction();
+            session.update(order);
+            tran_1.commit();
+            // 更新账户余额
+            AccountEntity account = order.getAccount();
+            account.setBalance(account.getBalance().subtract(order.getPay()));
+            Transaction tran_2 = session.beginTransaction();
+            session.update(account);
+            tran_2.commit();
+            session.close();
+            return "SUCCESS";
+        }catch (Exception e){
+            e.printStackTrace();
+            return e.getMessage();
+        }
     }
 }
 
