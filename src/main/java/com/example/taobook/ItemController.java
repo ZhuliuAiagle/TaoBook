@@ -4,13 +4,21 @@ import com.example.taobook.datasour.ItemEntity;
 import com.example.taobook.datasour.UserEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.mysql.cj.xdevapi.JsonArray;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
+import org.hibernate.criterion.Restrictions;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class ItemController {
@@ -58,7 +66,7 @@ public class ItemController {
             }
             it.setPublisher(pb);
             UserEntity rq = session.get(UserEntity.class, reqId);
-            if(rq == null){
+            if(type == 2 && rq == null){
                 System.out.println("User not found:" + reqId);
                 throw new ClassNotFoundException("User not found:" + reqId);
             }
@@ -113,6 +121,84 @@ public class ItemController {
     public String TestAPI(){
         return "nmb";
     }
+    @RequestMapping(value = "/item/getitemsbyclass", method = RequestMethod.GET,
+            produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String getItemsByClass(@RequestBody GetByClazzInfo getByClazzInfo){
+        String[] clazz = getByClazzInfo.clazz;
+        Session session = TaoBookApplication.sessionFactory.openSession();
+        String hql = "select it from ItemEntity it where it.clazz in(:clazz)";
+        List<ItemEntity> results = session.createQuery(hql).setParameterList("clazz",clazz).list();
+        JSONArray json = new JSONArray();
+        JSONObject ret = new JSONObject();
+        try {
+            if(results == null) throw new Exception("No result");
+            for (ItemEntity it : results) {
+                JSONObject jo = new JSONObject();
+                jo.put("name", it.getName());
+                json.put(jo);
+            }
+            System.out.println(json.toString());
+            ret.put("status","success");
+            ret.put("data",json);
+            return ret.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+            return e.getMessage();
+        }
+    }
+    @RequestMapping(value = "/item/search", method = RequestMethod.POST,
+            produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String Search(@RequestBody SearchInfo searchInfo){
+        JSONObject joex = new JSONObject();
+        try {
+                joex.put("status","failed");
+                String[] clazz = searchInfo.clazz;
+                String keyword = searchInfo.keyword;
+                String absKeyword = "%" + keyword + "%";
+                Session session = TaoBookApplication.sessionFactory.openSession();
+                List<ItemEntity> results;
+                if(clazz != null && clazz.length > 0){
+                    String hql = "select it from ItemEntity it where it.name like :keyword and it.clazz in (:clazz)";
+                    results = session.createQuery(hql).setParameter("keyword",absKeyword).setParameterList("clazz",clazz).list();
+                }  // 这种情况视为全部查找
+                else{
+                    String hql2 = "select it from ItemEntity it where it.name like :keyword";
+                    results = session.createQuery(hql2).setParameter("keyword",absKeyword).list();
+                }
+                JSONArray json = new JSONArray();
+                JSONObject ret = new JSONObject();
+                for (ItemEntity it : results) {
+                    JSONObject jo = new JSONObject();
+                    jo.put("id",it.getId());
+                    jo.put("name", it.getName());
+                    jo.put("publisher_id", it.getPublisher().getId());
+                    jo.put("publisher_name", it.getPublisher().getNickname());
+                    jo.put("clazz", it.getClazz());
+                    jo.put("type",it.getType());
+                    if(it.getRequester() != null)
+                        jo.put("req_id", it.getRequester().getId());
+                    jo.put("description",it.getDescription());
+                    jo.put("img",it.getImg());
+                    jo.put("stock",it.getStock());
+                    jo.put("price",it.getPrice());
+                    jo.put("buy_count",it.getBuyCount());
+                    jo.put("link",it.getLink());
+                    json.put(jo);
+                }
+                System.out.println(json.toString());
+                ret.put("status","success");
+                ret.put("data",json);
+                return ret.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+            try {
+                joex.put("msg", e.getMessage());
+            }catch (Exception ei){}
+            return joex.toString();
+        }
+    }
 }
 
 class NewItemInfo{
@@ -144,4 +230,17 @@ class DeleteItemInfo{
     String userId;
     @JsonProperty(value="item_id")
     String itemId;
+}
+
+class GetByClazzInfo{
+    @JsonProperty(value="clazz")
+    String[] clazz;
+}
+
+
+class SearchInfo{
+    @JsonProperty(value = "keyword")
+    String keyword;
+    @JsonProperty(value = "clazz")
+    String[] clazz;
 }
