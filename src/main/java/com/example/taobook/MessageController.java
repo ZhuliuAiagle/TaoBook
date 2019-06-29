@@ -44,7 +44,20 @@ public class MessageController {
             return e.getMessage();
         }
     }
+    @RequestMapping(value = "/message/records", method = RequestMethod.POST,
+            produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String getAllRecords(@RequestBody GetRecordsInfo getRecordsInfo){
+        
+
+
+
+
+        return "xxx";
+    }
 }
+
+
 
 class MessageInfo{
     @JsonProperty(value="type")
@@ -55,4 +68,9 @@ class MessageInfo{
     String toUid;
     @JsonProperty(value = "content")
     String content;
+}
+
+class GetRecordsInfo{
+    @JsonProperty(value="user_id")
+    String user_id;
 }

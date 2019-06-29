@@ -27,7 +27,9 @@ public class RequestController {
         System.out.println(description);
         BigDecimal priceCeil = requestInfo.priceCeil;
         BigDecimal priceFloor = requestInfo.priceFloor;
-        Timestamp deliTime = Timestamp.valueOf(requestInfo.deliTime);
+        System.out.println(requestInfo.deliTime);
+        Date deliTime = java.sql.Date.valueOf(requestInfo.deliTime);
+        Timestamp deliTime_2 = new Timestamp(deliTime.getTime());
         RequestEntity requestEntity = new RequestEntity();
         try{
             requestEntity.setId(id);
@@ -42,7 +44,7 @@ public class RequestController {
             requestEntity.setDescription(description);
             requestEntity.setPriceCeil(priceCeil);
             requestEntity.setPriceFloor(priceFloor);
-            requestEntity.setDeliTime(deliTime);
+            requestEntity.setDeliTime(deliTime_2);
             requestEntity.setImg(requestInfo.img);
             Transaction t = session.beginTransaction();
             session.save(requestEntity);
