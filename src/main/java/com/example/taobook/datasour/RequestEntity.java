@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "REQUEST", schema = "BOOK_SELLING")
-public class RequestEntity {
+public class RequestEntity implements Comparable<RequestEntity>{
     private String id;
     private Timestamp time;
     private String name;
@@ -138,5 +138,10 @@ public class RequestEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id, time, name, clazz, description, priceCeil, priceFloor, deliTime);
+    }
+
+    @Override
+    public int compareTo(RequestEntity o) {
+        return this.getTime().compareTo(o.getTime());
     }
 }

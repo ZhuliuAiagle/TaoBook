@@ -6,11 +6,15 @@ import com.example.taobook.datasour.UserEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class RequestController {
@@ -54,6 +58,39 @@ public class RequestController {
         }catch (Exception e){
             e.printStackTrace();
             return e.getMessage();
+        }
+    }
+    @RequestMapping(value = "/request/timeline", method = RequestMethod.POST,
+            produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String getTimeLine(){
+
+        Session session = TaoBookApplication.sessionFactory.openSession();
+        String hql = "select rq from RequestEntity rq";
+        List<RequestEntity> l = session.createQuery(hql).list();
+        Collections.sort(l);
+        Collections.reverse(l);
+        JSONObject joex = new JSONObject();
+        JSONObject ret = new JSONObject();
+        JSONArray result = new JSONArray();
+        try{
+            joex.put("status","failed");
+            for(RequestEntity r: l){
+                JSONObject j = new JSONObject();
+                j.put("user_id",r.getPublisher().getId());
+                j.put("time",r.getTime().toString());
+                j.put("name",r.getName());
+                j.put("clazz",r.getClazz());
+                j.put("description",r.getDescription());
+                result.put(j);
+            }
+            ret.put("status","success");
+            ret.put("data",result);
+            return ret.toString();
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return joex.toString();
         }
     }
 }
