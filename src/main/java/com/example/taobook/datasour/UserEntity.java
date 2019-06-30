@@ -7,7 +7,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "USER", schema = "BOOK_SELLING")
 public class UserEntity {
-    private String id;
+    public String id;
     private Integer role;
     private String nickname;
     private String password;

@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "MESSAGE", schema = "BOOK_SELLING")
-public class MessageEntity {
+public class MessageEntity implements Comparable<MessageEntity>{
     private String id;
     private int type;
     private Timestamp time;
@@ -102,5 +102,10 @@ public class MessageEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id, type, time, content, status);
+    }
+
+    @Override
+    public int compareTo(MessageEntity o) {
+        return this.getTime().compareTo(o.getTime());
     }
 }
