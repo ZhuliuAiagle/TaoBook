@@ -154,17 +154,19 @@ public class OrderController {
 
 class OrderInfo{
     @JsonProperty(value="acc_id")
-    String accId;
+    String accId; // 账户
     @JsonProperty(value="item_id")
-    String itemId;
+    String itemId; // 商品
     @JsonProperty(value="count")
-    int count;
+    int count; // 数量
     @JsonProperty(value="pay_type")
-    int payType;
+    int payType; // 付款方式
     @JsonProperty(value="type")
-    int type;
+    int type; // 订单类型
 }
 
+
+// 确认订单
 class ConfirmOrderInfo{
     @JsonProperty(value="user_id")
     String userId;
@@ -174,6 +176,7 @@ class ConfirmOrderInfo{
     int isAccepted;
 }
 
+// 派送订单（预留）
 class DeliveryInfo{
     @JsonProperty(value="user_id")
     String userId;
@@ -181,6 +184,7 @@ class DeliveryInfo{
     String orderId;
 }
 
+// 确认收货
 class SigningInfo{
     @JsonProperty(value="user_id")
     String userId;

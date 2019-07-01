@@ -73,15 +73,15 @@ public class AccountController {
 
 class AddAccountInfo{
     @JsonProperty("id")
-    String id;
+    String id; // 资金账户id
     @JsonProperty("user_id")
-    String userId;
+    String userId; // 用户id
     @JsonProperty("is_bank")
-    int isBank;
+    int isBank; // 是否是银行账户
     @JsonProperty("bank_type")
-    int bankType;
+    int bankType; // 银行种类
     @JsonProperty("bank_account")
-    String bankAccount;
+    String bankAccount; // 账户信息（由手机通过支付宝获取（接口预留））
 }
 
 class RechargeInfo{

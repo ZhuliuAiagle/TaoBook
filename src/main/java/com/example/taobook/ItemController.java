@@ -203,25 +203,25 @@ public class ItemController {
 
 class NewItemInfo{
     @JsonProperty(value="user_id")
-        String userId;
+        String userId; // id
     @JsonProperty(value = "req_id")
-        String reqId;
+        String reqId; // 应求者id
     @JsonProperty(value="itemname")
-        String name;
+        String name; // 名称
     @JsonProperty(value="clazz")
-        String clazz;
+        String clazz; // 类别
     @JsonProperty(value="type")
-        int type;
+        int type; // 类型
     @JsonProperty(value="description")
-        String description;
+        String description; // 描述
     @JsonProperty(value="img")
-        String img;
+        String img; // 图片链接
     @JsonProperty(value="stock")
-        int stock;
+        int stock; // 库存
     @JsonProperty(value="price")
-        BigDecimal price;
+        BigDecimal price; // 价格
     @JsonProperty(value="link")
-        String link;
+        String link; // 外链（如果有）
 }
 
 // 删除的话，除非是管理员，必须保证user_id和item_id一致
@@ -240,7 +240,7 @@ class GetByClazzInfo{
 
 class SearchInfo{
     @JsonProperty(value = "keyword")
-    String keyword;
+    String keyword; // 关键词
     @JsonProperty(value = "clazz")
-    String[] clazz;
+    String[] clazz; // 类别复选数组
 }

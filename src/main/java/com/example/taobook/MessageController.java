@@ -167,13 +167,13 @@ public class MessageController {
 
 class MessageInfo{
     @JsonProperty(value="type")
-    int type;
+    int type; // 消息类型
     @JsonProperty(value="from_uid")
-    String fromUid;
+    String fromUid; // 发送者
     @JsonProperty(value="to_uid")
-    String toUid;
+    String toUid; // 接收者
     @JsonProperty(value = "content")
-    String content;
+    String content; // 内容
 }
 
 class GetRecordsInfo{

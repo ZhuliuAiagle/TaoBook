@@ -123,29 +123,29 @@ public class UserController {
 // logininfo:for login
 class LoginInfo{
     @JsonProperty(value="username")
-    String username;
+    String username;   // 用户名
     @JsonProperty(value="password")
-    String password;
+    String password;   // 密码
 }
 
 //registerinfo:for register
 class RegisterInfo{
     @JsonProperty(value="username")
-    String username;
+    String username; // 用户名
     @JsonProperty(value="role")
-    int role;
+    int role;  // 角色
     @JsonProperty(value="nickname")
-    String nickname;
+    String nickname;  // 昵称
     @JsonProperty(value="password")
-    String password;
+    String password; // 密码
     @JsonProperty(value="sex")
-    int sex;
+    int sex; // 性别
     @JsonProperty(value="birthday")
-    String birthday;
+    String birthday; // 生日
     @JsonProperty(value="phone")
-    String phone;
+    String phone; // 电话
     @JsonProperty(value="email")
-    String email;
+    String email;  // 电子邮件
 }
 
 // modifyinfo: for the modification of infromation

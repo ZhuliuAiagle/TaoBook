@@ -97,15 +97,15 @@ public class RequestController {
 
 class RequestInfo{
     @JsonProperty(value="user_id")
-    String userId;
+    String userId; // id
     @JsonProperty(value = "name")
-    String name;
+    String name; // 标题
     @JsonProperty(value="clazz")
-    String clazz;
+    String clazz; // 类别
     @JsonProperty(value="description")
-    String description;
+    String description; // 描述
     @JsonProperty(value="price_ceil")
-    BigDecimal priceCeil;
+    BigDecimal priceCeil; // 价格参数（用户后端判断）
     @JsonProperty(value="price_floor")
     BigDecimal priceFloor;
     @JsonProperty(value="deli_time")
